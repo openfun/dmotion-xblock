@@ -1,22 +1,20 @@
-/* Javascript for DailyMotionXBlock. */
-function DailyMotionXBlock(runtime, element) {
+function DailyMotionXBlockStudio(runtime, element) {
 
-    function updateCount(result) {
-        $('.count', element).text(result.count);
+    function saveHandler() {
+        var handlerUrl = runtime.handlerUrl(element, 'studio_submit');
+        var data = {
+            video_id: $(element).find('input[name=video_id]').val()
+        };
+        runtime.notify('save', {state: 'start'});
+        $.post(handlerUrl, JSON.stringify(data)).done(function(response) {
+            runtime.notify('save', {state: 'end'});
+        });
     }
 
-    var handlerUrl = runtime.handlerUrl(element, 'increment_count');
+    function cancelHandler() {
+        runtime.notify('cancel', {});
+    }
 
-    $('p', element).click(function(eventObject) {
-        $.ajax({
-            type: "POST",
-            url: handlerUrl,
-            data: JSON.stringify({"hello": "world"}),
-            success: updateCount
-        });
-    });
-
-    $(function ($) {
-        /* Here's where you'd do things on page load. */
-    });
+    $(element).find('.save-button').bind('click', saveHandler);
+    $(element).find('.cancel-button').bind('click', cancelHandler);
 }
