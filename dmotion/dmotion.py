@@ -6,12 +6,17 @@ from xblock.core import XBlock
 from xblock.fields import Scope, String
 from xblock.fragment import Fragment
 
+from xblockutils.studio_editable import StudioEditableXBlockMixin
 
-class DailyMotionXBlock(XBlock):
+
+class DailyMotionXBlock(StudioEditableXBlockMixin, XBlock):
     """
     Provides a player for videos hosted on DailyMotion.
     """
-    video_id = String(help="Video ID", default=None, scope=Scope.content)
+    video_id = String(display_name="Video ID", help="DailyMotion Video ID",
+        scope=Scope.content, default='x2e4j6u')
+
+    editable_fields = ('video_id',)
 
     def resource_string(self, path):
         """
@@ -28,26 +33,6 @@ class DailyMotionXBlock(XBlock):
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/dmotion.css"))
         return frag
-
-    def studio_view(self, context):
-        """
-        Displays the edit view in the Studio.
-        """
-        html = self.resource_string("static/html/edit.html")
-        frag = Fragment(html.format(self=self))
-        frag.add_css(self.resource_string("static/css/dmotion.css"))
-        frag.add_javascript(self.resource_string("static/js/src/dmotion.js"))
-        frag.initialize_js('DailyMotionXBlockStudio')
-        return frag
-
-    @XBlock.json_handler
-    def studio_submit(self, data, suffix=''):
-        """
-        Called when submitting the form in Studio.
-        """
-        self.video_id = data.get('video_id')
-        return {'result': 'success'}
-
 
     @staticmethod
     def workbench_scenarios():
