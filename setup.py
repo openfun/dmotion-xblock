@@ -23,12 +23,13 @@ def package_data(pkg, roots):
 setup(
     name='dmotion-xblock',
     version='0.1',
-    description='dmotion XBlock',   # TODO: write a better description.
+    description="""XBlock for playing videos from DailyMotion on Open edX.""",
     packages=[
         'dmotion',
     ],
     install_requires=[
         'XBlock',
+        'xblock-utils',
     ],
     entry_points={
         'xblock.v1': [
