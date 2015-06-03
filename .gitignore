@@ -1,3 +1,5 @@
 dmotion_xblock.egg-info/
+build/
+dist/
 *.pyc
 .*.swp

@@ -27,6 +27,7 @@ setup(
     packages=[
         'dmotion',
     ],
+    include_package_data=True,
     install_requires=[
         'XBlock',
         'xblock-utils',
@@ -36,5 +37,5 @@ setup(
             'dmotion = dmotion:DailyMotionXBlock',
         ]
     },
-    package_data=package_data("dmotion", ["static", "public"]),
+    package_data=package_data("dmotion", ["public", "templates"]),
 )
