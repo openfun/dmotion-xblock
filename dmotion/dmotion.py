@@ -16,12 +16,19 @@ class DailyMotionXBlock(StudioEditableXBlockMixin, XBlock):
     """
     Provides a player for videos hosted on DailyMotion.
     """
-    video_url = String(display_name="Video URL",
-                      help="DailyMotion Video URL, of the form "
-                            "'http://www.dailymotion.com/video/x2e4j6u' or "
-                            "'http://dai.ly/x2e4j6u'",
-                      scope=Scope.content,
-                      default='http://dai.ly/x2e4j6u')
+    display_name = String(
+        help="Component's name in the studio",
+        default="DailyMotion video",
+        scope=Scope.settings
+    )
+    video_url = String(
+        display_name="Video URL",
+        help=("DailyMotion Video URL, of the form "
+              "'http://www.dailymotion.com/video/x2e4j6u' or "
+              "'http://dai.ly/x2e4j6u'"),
+        default='http://dai.ly/x2e4j6u',
+        scope=Scope.content
+    )
 
     editable_fields = ('video_url',)
 
